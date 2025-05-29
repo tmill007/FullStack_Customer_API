@@ -1,7 +1,5 @@
 package com.amigoscode.Customer;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("jdbc")
-public class JDBC_DataAccessService implements CustomerDAO{
+public class CustomerJDBC_DataAccessService implements CustomerDAO{
     private final JdbcTemplate jdbcTemplate;
     private final CustomerRowMapper customerRowMapper;
 
-    public JDBC_DataAccessService(JdbcTemplate jdbcTemplate, CustomerRowMapper customerRowMapper) {
+    public CustomerJDBC_DataAccessService(JdbcTemplate jdbcTemplate, CustomerRowMapper customerRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.customerRowMapper = customerRowMapper;
     }
@@ -54,7 +52,8 @@ public class JDBC_DataAccessService implements CustomerDAO{
                 VALUES (?, ?, ?)
                 """;
 
-        jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getAge());
+        int result = jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getAge());
+        System.out.println(result);
     }
 
     @Override
